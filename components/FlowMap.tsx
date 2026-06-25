@@ -12,29 +12,31 @@ import {
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { useEffect, useMemo } from "react";
-import { edges as rawEdges, nodes as rawNodes } from "@/lib/graph-data";
 import { KIND_STYLES } from "@/lib/kind-styles";
-import type { GraphNode } from "@/lib/types";
+import { layoutNodes } from "@/lib/layout";
+import type { GraphEdge, GraphNode } from "@/lib/types";
 import CardNode, { type CardNodeType } from "./CardNode";
 import { useLanguageStore } from "@/store/language-store";
 
 const nodeTypes = { card: CardNode };
 
-function toFlowNodes(data: GraphNode[]): CardNodeType[] {
+function toFlowNodes(data: GraphNode[], edges: GraphEdge[]): CardNodeType[] {
+  const positions = layoutNodes(data, edges);
   return data.map((n) => ({
     id: n.id,
     type: "card",
-    position: { x: n.x, y: n.y },
+    position: positions.get(n.id) ?? { x: n.x, y: n.y },
     data: { ...n },
   }));
 }
 
 function toFlowEdges(
-  data: typeof rawEdges,
+  data: GraphEdge[],
+  allNodes: GraphNode[],
   lang: "si" | "en"
 ): Edge[] {
   return data.map((e) => {
-    const sourceKind = rawNodes.find((n) => n.id === e.source)?.kind;
+    const sourceKind = allNodes.find((n) => n.id === e.source)?.kind;
     const color = sourceKind ? KIND_STYLES[sourceKind].hex : "#71717a";
     return {
       id: e.id,
@@ -49,16 +51,28 @@ function toFlowEdges(
   });
 }
 
-export default function FlowMap() {
+interface FlowMapProps {
+  nodes: GraphNode[];
+  edges: GraphEdge[];
+}
+
+export default function FlowMap({ nodes: rawNodes, edges: rawEdges }: FlowMapProps) {
   const lang = useLanguageStore((s) => s.lang);
-  const initialNodes = useMemo(() => toFlowNodes(rawNodes), []);
+  const initialNodes = useMemo(
+    () => toFlowNodes(rawNodes, rawEdges),
+    [rawNodes, rawEdges]
+  );
   const initialEdges = useMemo(
-    () => toFlowEdges(rawEdges, lang),
-    [lang]
+    () => toFlowEdges(rawEdges, rawNodes, lang),
+    [rawEdges, rawNodes, lang]
   );
 
-  const [nodes, , onNodesChange] = useNodesState(initialNodes);
+  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+
+  useEffect(() => {
+    setNodes(initialNodes);
+  }, [initialNodes, setNodes]);
 
   useEffect(() => {
     setEdges(initialEdges);
@@ -75,7 +89,8 @@ export default function FlowMap() {
         colorMode="dark"
         minZoom={0.1}
         maxZoom={1.5}
-        defaultViewport={{ x: 0, y: 0, zoom: 0.55 }}
+        fitView
+        fitViewOptions={{ padding: 0.2 }}
         proOptions={{ hideAttribution: true }}
       >
         <Background variant={BackgroundVariant.Dots} gap={24} size={1} />

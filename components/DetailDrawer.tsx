@@ -1,19 +1,24 @@
 "use client";
 
 import { useMemo } from "react";
-import { edges, nodes } from "@/lib/graph-data";
 import { KIND_STYLES } from "@/lib/kind-styles";
+import type { GraphEdge, GraphNode } from "@/lib/types";
 import { useLanguageStore } from "@/store/language-store";
 import { useUIStore } from "@/store/ui-store";
 
-export default function DetailDrawer() {
+interface DetailDrawerProps {
+  nodes: GraphNode[];
+  edges: GraphEdge[];
+}
+
+export default function DetailDrawer({ nodes, edges }: DetailDrawerProps) {
   const lang = useLanguageStore((s) => s.lang);
   const selectedNodeId = useUIStore((s) => s.selectedNodeId);
   const selectNode = useUIStore((s) => s.selectNode);
 
   const node = useMemo(
     () => nodes.find((n) => n.id === selectedNodeId) ?? null,
-    [selectedNodeId]
+    [nodes, selectedNodeId]
   );
 
   const connections = useMemo(() => {
@@ -26,7 +31,7 @@ export default function DetailDrawer() {
     return [...ids]
       .map((id) => nodes.find((n) => n.id === id))
       .filter((n): n is NonNullable<typeof n> => Boolean(n));
-  }, [node]);
+  }, [node, edges, nodes]);
 
   const isOpen = node !== null;
   const style = node ? KIND_STYLES[node.kind] : null;
@@ -73,6 +78,28 @@ export default function DetailDrawer() {
               </button>
             </div>
 
+            {node.image && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={node.image}
+                alt={node.name[lang]}
+                className="h-40 w-full rounded-lg border border-zinc-700 object-cover"
+              />
+            )}
+
+            {node.video && (
+              <div className="space-y-1">
+                <h3 className="text-xs font-semibold uppercase tracking-wide text-zinc-500">
+                  {lang === "si" ? "වීඩියෝ" : "Video"}
+                </h3>
+                <video
+                  src={node.video}
+                  controls
+                  className="w-full rounded-lg border border-zinc-700"
+                />
+              </div>
+            )}
+
             <div className="space-y-1">
               <h3 className="text-xs font-semibold uppercase tracking-wide text-zinc-500">
                 සිංහල
@@ -90,6 +117,28 @@ export default function DetailDrawer() {
                 {node.en}
               </p>
             </div>
+
+            {node.sources && node.sources.length > 0 && (
+              <div className="space-y-2">
+                <h3 className="text-xs font-semibold uppercase tracking-wide text-zinc-500">
+                  {lang === "si" ? "මූලාශ්‍ර" : "Sources"}
+                </h3>
+                <ul className="flex flex-col gap-1.5">
+                  {node.sources.map((source, i) => (
+                    <li key={`${source.url}-${i}`}>
+                      <a
+                        href={source.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 rounded-lg border border-zinc-700 bg-zinc-800/60 px-3 py-2 text-sm text-sky-400 hover:border-zinc-500 hover:bg-zinc-800 hover:underline"
+                      >
+                        {source.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {connections.length > 0 && (
               <div className="space-y-2">
