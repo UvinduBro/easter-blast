@@ -1,5 +1,5 @@
 import type { LocalizedText } from "@/lib/types";
-import type { StatusMark } from "@/lib/site/types";
+import type { PageImage, StatusMark } from "@/lib/site/types";
 import { FAQ_HEADING, FAQ_ITEMS } from "@/lib/site-content/faq";
 
 export const HOME_SEO: { title: LocalizedText; description: LocalizedText } = {
@@ -92,6 +92,80 @@ export const FEATURED_VICTIMS = {
   link: { en: "Read the Victims page →", si: "විපතට පත් වූවන් පිටුව කියවන්න →" },
 };
 
+export const MEMORIAL_GALLERY: { heading: LocalizedText; intro: LocalizedText; link: LocalizedText; images: PageImage[] } = {
+  heading: {
+    en: "From St. Sebastian's Church, Katuwapitiya",
+    si: "කටුවාපිටිය, ශාන්ත සෙබස්තියන් දේවස්ථානයෙන්",
+  },
+  intro: {
+    en: "Photographs from the deadliest single site of the attack, in Negombo.",
+    si: "ප්‍රහාරයේ වඩාත්ම මරණ ගණන වැඩි වූ එකම ස්ථානයේ, නිගොම්බෝ, ඡායාරූප.",
+  },
+  link: {
+    en: "Read about all six attack sites →",
+    si: "සියලුම ප්‍රහාරයට ලක් වූ ස්ථාන හය ගැන කියවන්න →",
+  },
+  images: [
+    {
+      url: "/images/attacks/st-sebastians-negombo-interior-1.webp",
+      alt: {
+        en: "Damage inside St. Sebastian's Church, Katuwapitiya, after the bombing",
+        si: "බෝම්බ ප්‍රහාරයෙන් පසු ශාන්ත සෙබස්තියන් දේවස්ථානය, කටුවාපිටිය, ඇතුළත සිදුවූ හානිය",
+      },
+      caption: {
+        en: "The church interior in the aftermath of the blast.",
+        si: "පිපිරීමෙන් පසු දේවස්ථානයේ ඇතුළත දර්ශනයක්.",
+      },
+    },
+    {
+      url: "/images/attacks/st-sebastians-negombo-interior-2.jpeg",
+      alt: {
+        en: "Security personnel inspecting the damaged church interior",
+        si: "හානි වූ දේවස්ථානයේ ඇතුළත පරීක්ෂා කරන ආරක්ෂක නිලධාරීන්",
+      },
+      caption: {
+        en: "Security personnel at the site shortly after the attack.",
+        si: "ප්‍රහාරයෙන් පසු ස්ථානයේ සිටි ආරක්ෂක නිලධාරීන්.",
+      },
+    },
+    {
+      url: "/images/attacks/st-sebastians-negombo-interior-3.jpeg",
+      alt: {
+        en: "Shrapnel and blast damage inside the church",
+        si: "දේවස්ථානය ඇතුළත පතුරු සහ පිපිරීමේ හානිය",
+      },
+      caption: {
+        en: "Shrapnel damage to the church's interior fittings.",
+        si: "දේවස්ථානයේ ඇතුළත උපකරණවලට සිදු වූ පතුරු හානිය.",
+      },
+    },
+    {
+      url: "/images/attacks/st-sebastians-negombo-statue-1.webp",
+      alt: {
+        en: "The statue of the Risen Christ at St. Sebastian's, marked by shrapnel and blood",
+        si: "පතුරු හා රුධිරයෙන් සලකුණු වූ, ශාන්ත සෙබස්තියන් දේවස්ථානයේ නැවත නැඟී සිටින ක්‍රිස්තුස් ප්‍රතිමාව",
+      },
+      caption: {
+        en: "The statue of the Risen Christ, struck by shrapnel during the blast, became one of the lasting images of the attack.",
+        si: "පිපිරීමේදී පතුරුවලින් හානි වූ නැවත නැඟී සිටින ක්‍රිස්තුස් ප්‍රතිමාව, ප්‍රහාරයේ දිගටම මතකයේ රැඳුණු දර්ශන වලින් එකක් විය.",
+      },
+      graphic: true,
+    },
+    {
+      url: "/images/attacks/st-sebastians-negombo-statue-2.jpeg",
+      alt: {
+        en: "Close-up of the Risen Christ statue showing blast damage",
+        si: "පිපිරීමේ හානිය පෙන්නුම් කරන නැවත නැඟී සිටින ක්‍රිස්තුස් ප්‍රතිමාවේ සමීප දර්ශනය",
+      },
+      caption: {
+        en: "A closer view of the same statue, widely shared in the days after the attack.",
+        si: "ප්‍රහාරයෙන් පසු දින කිහිපය තුළ බෙහෙවින් බදා හරිනු ලැබූ එම ප්‍රතිමාවේම සමීප දර්ශනයක්.",
+      },
+      graphic: true,
+    },
+  ],
+};
+
 export const MIND_MAP_SECTION = {
   heading: { en: "Explore the relationship map", si: "සම්බන්ධතා සිතියම බලන්න" },
   body: {
@@ -111,6 +185,7 @@ export const HOME_CONTENT = {
   latestUpdatesHeading: LATEST_UPDATES_HEADING,
   latestUpdatesLink: LATEST_UPDATES_LINK,
   featuredVictims: FEATURED_VICTIMS,
+  memorialGallery: MEMORIAL_GALLERY,
   mindMapSection: MIND_MAP_SECTION,
   faqHeading: FAQ_HEADING,
   faqItems: FAQ_ITEMS,
