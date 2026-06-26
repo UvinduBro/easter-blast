@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import dynamic from "next/dynamic";
 import Disclaimer from "@/components/Disclaimer";
 import Legend from "@/components/Legend";
@@ -17,7 +18,7 @@ const FlowMap = dynamic(() => import("@/components/FlowMap"), {
   ssr: false,
 });
 
-export default function Home() {
+export default function MindMapPage() {
   const lang = useLanguageStore((s) => s.lang);
   const toggleLang = useLanguageStore((s) => s.toggleLang);
   const view = useViewStore((s) => s.view);
@@ -28,7 +29,13 @@ export default function Home() {
       <Disclaimer />
 
       <header className="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-800 bg-zinc-950 px-4 py-2.5">
-        <div className="min-w-0">
+        <div className="flex min-w-0 items-center gap-3">
+          <Link
+            href="/"
+            className="shrink-0 text-xs font-medium text-zinc-400 hover:text-zinc-100"
+          >
+            {lang === "si" ? "← මුල් පිටුවට" : "← Back to site"}
+          </Link>
           <h1 className="truncate text-sm font-semibold text-zinc-50 sm:text-base">
             {lang === "si"
               ? "පාස්කු ප්‍රහාරය — මානසික සිතියම"

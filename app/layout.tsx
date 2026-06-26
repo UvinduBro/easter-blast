@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Noto_Sans_Sinhala } from "next/font/google";
+import { SITE_CONFIG } from "@/lib/site/config";
 import "./globals.css";
 
 const notoSansSinhala = Noto_Sans_Sinhala({
@@ -9,9 +10,15 @@ const notoSansSinhala = Noto_Sans_Sinhala({
 });
 
 export const metadata: Metadata = {
-  title: "Pasku Map — Easter Sunday Attack Mind Map",
+  metadataBase: new URL(SITE_CONFIG.url),
+  title: `${SITE_CONFIG.brandName} — The 2019 Sri Lanka Easter Sunday Attacks`,
   description:
-    "An interactive mind map exploring allegations and investigations around Sri Lanka's 2019 Easter Sunday attacks.",
+    "An independent, continuously updated record of the 21 April 2019 Easter Sunday bombings — who died, who did it, who failed to stop it, and the long, unfinished search for accountability.",
+  openGraph: {
+    siteName: SITE_CONFIG.brandName,
+    url: SITE_CONFIG.url,
+    type: "website",
+  },
 };
 
 export default function RootLayout({

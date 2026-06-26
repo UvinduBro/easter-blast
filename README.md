@@ -1,30 +1,47 @@
-# Pasku Map — Easter Sunday Attack Mind Map
+# Easter Blast — easterattack.com
 
-An interactive, bilingual (Sinhala / English) explorer of the people, events, allegations and
-counter-arguments that have surrounded the investigations into Sri Lanka's 2019 Easter Sunday attacks.
-Built with Next.js (App Router), [`@xyflow/react`](https://reactflow.dev/) and Firebase.
+A bilingual (Sinhala / English) content site documenting Sri Lanka's 2019 Easter Sunday attacks: the
+victims, the perpetrators, the intelligence failure, the court cases and the ongoing search for
+accountability. Every claim on the site is tagged **FACT**, **ALLEGATION**, **DEVELOPING** or
+**DISPUTED** so readers can tell what's proven from what's contested. The site also embeds an
+interactive relationship mind map of the people, places, organisations and events in the case.
+
+Built with Next.js (App Router), Tailwind CSS, [`@xyflow/react`](https://reactflow.dev/) and Firebase.
 
 > **Disclaimer**: The content reflects one author's (Dasun Sameera Weerasinghe) own self-described,
 > partial and independently compiled research. Many of the claims and allegations shown are unproven
-> and contested. This is also visible as a banner inside the app itself.
+> and contested. This is also visible as a banner inside the mind map.
 
 ## Stack
 
 - Next.js (App Router) + TypeScript
-- Firebase Firestore — node/edge dataset, read live by the public app via `onSnapshot`
-- Firebase Storage — admin-uploaded images/videos for nodes
+- Firebase Firestore — mind-map node/edge dataset, read live by the public app via `onSnapshot`
+- Firebase Storage — admin-uploaded images/videos for mind-map nodes
 - Firebase Authentication — email/password login gating the admin panel
 - [`@xyflow/react`](https://reactflow.dev/) for the mind-map canvas, laid out automatically with
   [`@dagrejs/dagre`](https://github.com/dagrejs/dagre)
 - Tailwind CSS v4
-- Zustand for language toggle, view switcher and selected-node UI state
+- Zustand for the language toggle, mind-map view switcher and selected-node UI state
 
-## Views
+## Site structure
 
-The header's view switcher toggles between five ways of exploring the same dataset:
+Ten content pages, all bilingual via a shared `{ si, en }` text model, share one header/footer shell:
 
-- **Mind Map** — the original node-graph canvas, now auto-arranged top-down with dagre so
-  cause → effect relationships read top-to-bottom instead of needing manual untangling.
+`Home` · `Timeline` · `The Attacks` · `Victims` · `Perpetrators` · `Accountability` ·
+`Investigation & Controversy` · `Court Cases` · `Updates` · `About & Sources`
+
+Every factual claim renders through `StatusTag` (🟢 fact / 🟡 allegation / 🔵 developing / ⚪ disputed),
+so the fact/allegation distinction is visible page-to-page instead of buried in prose.
+
+The Home page embeds a lightweight, read-only version of the mind map; the full interactive
+experience (view switcher, search/filter, detail drawer) lives at `/mind-map`.
+
+## Mind map views
+
+`/mind-map`'s header view switcher toggles between five ways of exploring the same dataset:
+
+- **Mind Map** — the node-graph canvas, auto-arranged top-down with dagre so cause → effect
+  relationships read top-to-bottom instead of needing manual untangling.
 - **Timeline** — nodes grouped by date, oldest to newest, with an "Undated" group at the end.
 - **Table** — a searchable, filterable, sortable list of every node.
 - **Grouped** — nodes bucketed by category (person, event, allegation, counter-argument, committee, legal).
@@ -45,7 +62,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ### Local development with the Firebase emulators
 
-The app is designed to run entirely against the [Firebase Local Emulator
+The mind map is designed to run entirely against the [Firebase Local Emulator
 Suite](https://firebase.google.com/docs/emulator-suite) so you don't need a real Firebase project to
 develop:
 
@@ -70,13 +87,13 @@ typically [http://localhost:4000](http://localhost:4000)) → Authentication →
    `NEXT_PUBLIC_USE_FIREBASE_EMULATOR` unset/`false`.
 3. Deploy the security rules: `npx firebase deploy --only firestore:rules,storage`.
 4. Create at least one admin user (Console → Authentication → Add user) — anyone who can sign in can
-   edit content, there are no roles.
+   edit the mind-map dataset, there are no roles.
 5. Seed the dataset: set `FIREBASE_SERVICE_ACCOUNT_KEY` (paste a service account JSON as one line)
    and `FIREBASE_PROJECT_ID` in `.env.local`, then `npm run seed`.
 
 ## Admin panel
 
-`/admin` is a content-management UI for the dataset, gated behind Firebase Auth:
+`/admin` is a content-management UI for the mind-map dataset, gated behind Firebase Auth:
 
 - `/admin/login` — email/password sign-in.
 - `/admin` — dashboard with live node/edge counts.
@@ -87,21 +104,37 @@ typically [http://localhost:4000](http://localhost:4000)) → Authentication →
   with optional bilingual labels.
 
 New nodes are positioned automatically by the dagre layout on the Mind Map — there's no manual x/y
-entry in the admin form.
+entry in the admin form. The ten content pages are not editable from `/admin`; their copy lives in
+`lib/site-content/*.ts` and is edited in code.
 
 ## Project structure
 
-- `app/page.tsx` — page shell: header, view switcher, disclaimer, legend, active view, detail drawer
+- `app/(site)/` — the ten bilingual content pages (Home, Timeline, The Attacks, Victims,
+  Perpetrators, Accountability, Investigation & Controversy, Court Cases, Updates, About & Sources),
+  sharing `app/(site)/layout.tsx` (`SiteHeader` + `SiteFooter`)
+- `app/mind-map/page.tsx` — the full interactive mind-map app: view switcher, disclaimer, legend,
+  active view, detail drawer
 - `app/admin/` — admin login, route guard layout, dashboard, and node/edge CRUD pages
+- `components/site/` — site shell and content-page components: `SiteHeader`, `SiteFooter`,
+  `PageHeader`, `PageBody`, `ContentSection` (boxed entries reused by most content pages),
+  `StatusTag`, `Callout`, plus bespoke per-page components (`HomeContent`, `HomeMindMap`,
+  `VictimsContent`, `TimelinePhase`, `UpdatesContent`, `UpdateCard`, `CourtCaseCard`,
+  `CourtJudgmentTable`, `AboutContent`)
 - `components/FlowMap.tsx` — React Flow canvas (dagre-laid-out nodes/edges, minimap, controls)
 - `components/CardNode.tsx` — custom node renderer for the Mind Map
 - `components/views/` — `TimelineView`, `TableView`, `GroupedView`, `TreeView`
-- `components/ViewSwitcher.tsx` — header control for switching between the five views
+- `components/ViewSwitcher.tsx` — mind-map header control for switching between the five views
 - `components/DetailDrawer.tsx` — slide-in panel (bottom sheet on mobile) with bilingual detail,
-  image/video, sources and connections — shared by every view
+  image/video, sources and connections — shared by every mind-map view
 - `components/Legend.tsx` — category color legend
 - `components/Disclaimer.tsx` — dismissible disclaimer banner
 - `components/admin/NodeForm.tsx`, `components/admin/EdgeForm.tsx` — admin create/edit forms
+- `lib/site-content/` — bilingual copy for each content page (one file per page), kept as data,
+  never hardcoded in JSX
+- `lib/site/config.ts` — site identity (`easterattack.com` domain, brand name, contact emails)
+- `lib/site/nav.ts` — primary navigation
+- `lib/site/types.ts` — shared content-page types (`ContentSection`, `Entry`, `StatusMark`)
+- `lib/status-styles.ts` — icon/color/label per status tag (fact/allegation/developing/disputed)
 - `lib/firebase-client.ts` — Firebase Web SDK init (Auth/Firestore/Storage, with emulator wiring)
 - `lib/firebase-admin.ts` — Firebase Admin SDK init, used only by `scripts/seed.ts`
 - `lib/hooks/useGraphData.ts` — live `onSnapshot` subscription to the `nodes`/`edges` collections
@@ -109,12 +142,12 @@ entry in the admin form.
 - `lib/admin-actions.ts` — admin CRUD + Storage upload helpers
 - `lib/layout.ts` — dagre-based auto-layout for the Mind Map
 - `lib/tree.ts` — builds the forest used by `TreeView`
-- `lib/graph-data.ts` — seed dataset (all captions live here, not in JSX); only used by `scripts/seed.ts`
-- `lib/types.ts` — shared types
-- `lib/kind-styles.ts` — color/label mapping per node category
-- `store/language-store.ts` — Sinhala/English toggle (persisted)
-- `store/view-store.ts` — active view mode
-- `store/ui-store.ts` — selected-node state for the detail drawer
+- `lib/graph-data.ts` — seed dataset for the mind map; only used by `scripts/seed.ts`
+- `lib/types.ts` — shared types, including `LocalizedText` (`{ si, en }`) used across the whole site
+- `lib/kind-styles.ts` — color/label mapping per mind-map node category
+- `store/language-store.ts` — Sinhala/English toggle (persisted), used site-wide
+- `store/view-store.ts` — active mind-map view mode
+- `store/ui-store.ts` — selected-node state for the mind-map detail drawer
 - `firestore.rules`, `storage.rules` — public read, auth-required write
 
 ## Building
@@ -131,10 +164,12 @@ and deploy.
 
 ## Notes
 
-- All node/edge captions are data (Firestore, originally seeded from `lib/graph-data.ts`), never
-  hardcoded in components.
-- Avatars are initials-only placeholders. The optional `image` field on a node is supported by
-  `CardNode` and the detail drawer, but no real photos are fetched or embedded by this codebase —
+- All content-page copy lives in `lib/site-content/*.ts`, and all mind-map node/edge captions are
+  data (Firestore, originally seeded from `lib/graph-data.ts`) — never hardcoded in components.
+- `Updates` entries carry a literal `source: "[add link]"` placeholder where a citation URL hasn't
+  been confirmed yet; this is intentional and must not be replaced with a guessed URL.
+- Avatars are initials-only placeholders. The optional `image` field on a mind-map node is supported
+  by `CardNode` and the detail drawer, but no real photos are fetched or embedded by this codebase —
   any image shown is whatever an authenticated admin explicitly uploaded.
 - Language choice persists across reloads via `localStorage`.
 - Respects `prefers-reduced-motion` (transitions are disabled for users who request it).

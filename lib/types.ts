@@ -44,3 +44,6 @@ export interface GraphEdge {
 }
 
 export type Lang = "si" | "en";
+
+/** Status tags used across the content site to distinguish proven facts from claims. */
+export type Status = "fact" | "allegation" | "developing" | "disputed";

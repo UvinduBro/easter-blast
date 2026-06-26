@@ -1,0 +1,117 @@
+"use client";
+
+import Link from "next/link";
+import HomeMindMap from "@/components/site/HomeMindMap";
+import StatusTag from "@/components/site/StatusTag";
+import UpdateCard from "@/components/site/UpdateCard";
+import {
+  AT_A_GLANCE,
+  FEATURED_VICTIMS,
+  HERO,
+  LATEST_UPDATES_HEADING,
+  LATEST_UPDATES_LINK,
+  THREE_THINGS,
+  WHAT_HAPPENED,
+  WHAT_HAPPENED_LINK,
+} from "@/lib/site-content/home";
+import { UPDATES } from "@/lib/site-content/updates";
+import { useLanguageStore } from "@/store/language-store";
+
+const TEXT = {
+  si: { whatHeading: "සිදු වූයේ කුමක්ද", threeHeading: "තේරුම් ගත යුතු කරුණු තුනක්" },
+  en: { whatHeading: "What happened", threeHeading: "Three things to understand" },
+};
+
+export default function HomeContent() {
+  const lang = useLanguageStore((s) => s.lang);
+  const copy = TEXT[lang];
+  const latestUpdates = UPDATES.slice(0, 3);
+
+  return (
+    <div className="space-y-10">
+      <section>
+        <h1 className="text-2xl font-bold text-zinc-50 sm:text-3xl">{HERO.kicker[lang]}</h1>
+        <p className="mt-3 text-base leading-relaxed text-zinc-200 sm:text-lg">{HERO.body[lang]}</p>
+        <p className="mt-3 text-sm italic leading-relaxed text-zinc-400">{HERO.note[lang]}</p>
+        <div className="mt-5 flex flex-wrap gap-3">
+          <Link
+            href="/timeline"
+            className="rounded-full bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-500"
+          >
+            {HERO.ctaTimeline[lang]}
+          </Link>
+          <Link
+            href="/victims"
+            className="rounded-full border border-zinc-700 px-4 py-2 text-sm font-semibold text-zinc-200 hover:border-zinc-500 hover:bg-zinc-800"
+          >
+            {HERO.ctaVictims[lang]}
+          </Link>
+        </div>
+      </section>
+
+      <section className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+        {AT_A_GLANCE.map((stat, i) => (
+          <div key={i} className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-4 text-center">
+            <div className="text-xl font-bold text-zinc-50 sm:text-2xl">{stat.value}</div>
+            <div className="mt-1 text-xs text-zinc-400">{stat.label[lang]}</div>
+          </div>
+        ))}
+      </section>
+
+      <section className="border-t border-zinc-900 pt-8">
+        <h2 className="text-lg font-semibold text-zinc-50 sm:text-xl">{copy.whatHeading}</h2>
+        <p className="mt-3 text-sm leading-relaxed text-zinc-300 sm:text-base">{WHAT_HAPPENED[lang]}</p>
+        <Link href="/attacks" className="mt-2 inline-block text-sm font-medium text-red-400 hover:text-red-300">
+          {WHAT_HAPPENED_LINK[lang]}
+        </Link>
+      </section>
+
+      <section className="border-t border-zinc-900 pt-8">
+        <h2 className="text-lg font-semibold text-zinc-50 sm:text-xl">{copy.threeHeading}</h2>
+        <ol className="mt-4 space-y-4">
+          {THREE_THINGS.map((item, i) => (
+            <li key={i} className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-4">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <h3 className="font-semibold text-zinc-100">
+                  {i + 1}. {item.heading[lang]}
+                </h3>
+                <div className="flex flex-wrap gap-1.5">
+                  {item.statuses.map((s, j) => (
+                    <StatusTag key={j} status={s.status} note={s.note} />
+                  ))}
+                </div>
+              </div>
+              <p className="mt-1.5 text-sm leading-relaxed text-zinc-300">{item.body[lang]}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section className="border-t border-zinc-900 pt-8">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h2 className="text-lg font-semibold text-zinc-50 sm:text-xl">
+            {LATEST_UPDATES_HEADING[lang]}
+          </h2>
+          <Link href="/updates" className="text-sm font-medium text-red-400 hover:text-red-300">
+            {LATEST_UPDATES_LINK[lang]}
+          </Link>
+        </div>
+        <div className="mt-4 space-y-4">
+          {latestUpdates.map((entry, i) => (
+            <UpdateCard key={i} entry={entry} />
+          ))}
+        </div>
+      </section>
+
+      <section className="border-t border-zinc-900 pt-8">
+        <h2 className="text-lg font-semibold text-zinc-50 sm:text-xl">{FEATURED_VICTIMS.heading[lang]}</h2>
+        <p className="mt-3 text-sm leading-relaxed text-zinc-300 sm:text-base">{FEATURED_VICTIMS.body[lang]}</p>
+        <Link href="/victims" className="mt-2 inline-block text-sm font-medium text-red-400 hover:text-red-300">
+          {FEATURED_VICTIMS.link[lang]}
+        </Link>
+      </section>
+
+      <HomeMindMap />
+    </div>
+  );
+}
