@@ -15,8 +15,18 @@ function buildApp() {
       "Set FIRESTORE_EMULATOR_HOST (for local dev) or FIREBASE_SERVICE_ACCOUNT_KEY (a JSON service account key, for production) before running admin scripts."
     );
   }
+  let parsed: object;
+  try {
+    parsed = JSON.parse(serviceAccountKey);
+  } catch {
+    throw new Error(
+      "FIREBASE_SERVICE_ACCOUNT_KEY is not valid JSON. It must be the entire service account " +
+        "JSON file contents (Firebase Console → Project Settings → Service Accounts → Generate " +
+        "new private key), not just the private_key field."
+    );
+  }
   return initializeApp({
-    credential: cert(JSON.parse(serviceAccountKey)),
+    credential: cert(parsed),
     projectId,
   });
 }
