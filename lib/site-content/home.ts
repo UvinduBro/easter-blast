@@ -13,11 +13,25 @@ export const HOME_SEO: { title: LocalizedText; description: LocalizedText } = {
   },
 };
 
-export const HERO = {
+export const HERO: {
+  tag: LocalizedText;
+  kicker: LocalizedText;
+  body: LocalizedText;
+  status: LocalizedText;
+  note: LocalizedText;
+  ctaTimeline: LocalizedText;
+  ctaVictims: LocalizedText;
+  image: PageImage;
+} = {
+  tag: { en: "Investigation Record — Easter Sunday 2019", si: "විමර්ශන වාර්තාව — 2019 පාස්කු ඉරිදා" },
   kicker: { en: "Easter Sunday, 21 April 2019.", si: "පාස්කු ඉරිදා, 2019 අප්‍රේල් 21." },
   body: {
     en: "In the space of about twenty minutes, coordinated suicide bombings tore through three churches and three luxury hotels in Sri Lanka. At least 269 people were killed and around 500 wounded. Years later, the central questions — who was truly behind it, and why repeated warnings were ignored — are still being fought over in courtrooms and Parliament.",
     si: "මිනිත්තු විස්සක් පමණ කාලයක් තුළ, සංවිධානාත්මක මරාගෙන මැරෙන බෝම්බ ප්‍රහාර ශ්‍රී ලංකාවේ පල්ලි තුනක් සහ සුඛෝපභෝගී හෝටල් තුනක් විනාශ කළේය. අවම වශයෙන් 269 දෙනෙකු මිය ගිය අතර 500ක් පමණ තුවාල ලැබූහ. වසර ගණනාවකට පසුවත් — එහි සැබවින්ම සිටියේ කවුරුන්ද, සහ නැවත නැවතත් කරන ලද අනතුරු ඇඟවීම් නොසලකා හරින ලද්දේ මන්ද යන ප්‍රධාන ප්‍රශ්න — අධිකරණවල සහ පාර්ලිමේන්තුවේ තවමත් සටන් වදිමින් පවතී.",
+  },
+  status: {
+    en: "Investigation ongoing. Full accountability still unresolved.",
+    si: "විමර්ශනය ක්‍රියාත්මකව පවතී. සම්පූර්ණ වගකීම තවමත් විසඳී නැත.",
   },
   note: {
     en: "This site keeps the record straight: what is proven, what is alleged, and what is still unfolding.",
@@ -25,6 +39,13 @@ export const HERO = {
   },
   ctaTimeline: { en: "Explore the Timeline", si: "කාල රාමුව බලන්න" },
   ctaVictims: { en: "Remember the Victims", si: "විපතට පත් වූවන් සිහිපත් කරන්න" },
+  image: {
+    url: "/images/attacks/st-sebastians-negombo-interior-1.webp",
+    alt: {
+      en: "Damage inside St. Sebastian's Church, Katuwapitiya, after the bombing",
+      si: "බෝම්බ ප්‍රහාරයෙන් පසු ශාන්ත සෙබස්තියන් දේවස්ථානය, කටුවාපිටිය, ඇතුළත සිදුවූ හානිය",
+    },
+  },
 };
 
 export const AT_A_GLANCE: { value: string; label: LocalizedText }[] = [
@@ -92,7 +113,15 @@ export const FEATURED_VICTIMS = {
   link: { en: "Read the Victims page →", si: "විපතට පත් වූවන් පිටුව කියවන්න →" },
 };
 
-export const MEMORIAL_GALLERY: { heading: LocalizedText; intro: LocalizedText; link: LocalizedText; images: PageImage[] } = {
+export const MEMORIAL_GALLERY: {
+  heading: LocalizedText;
+  intro: LocalizedText;
+  link: LocalizedText;
+  backgroundImage: PageImage;
+  accentImage: PageImage;
+  sensitiveNote: LocalizedText;
+  sensitiveImages: PageImage[];
+} = {
   heading: {
     en: "From St. Sebastian's Church, Katuwapitiya",
     si: "කටුවාපිටිය, ශාන්ත සෙබස්තියන් දේවස්ථානයෙන්",
@@ -105,40 +134,29 @@ export const MEMORIAL_GALLERY: { heading: LocalizedText; intro: LocalizedText; l
     en: "Read about all six attack sites →",
     si: "සියලුම ප්‍රහාරයට ලක් වූ ස්ථාන හය ගැන කියවන්න →",
   },
-  images: [
-    {
-      url: "/images/attacks/st-sebastians-negombo-interior-1.webp",
-      alt: {
-        en: "Damage inside St. Sebastian's Church, Katuwapitiya, after the bombing",
-        si: "බෝම්බ ප්‍රහාරයෙන් පසු ශාන්ත සෙබස්තියන් දේවස්ථානය, කටුවාපිටිය, ඇතුළත සිදුවූ හානිය",
-      },
-      caption: {
-        en: "The church interior in the aftermath of the blast.",
-        si: "පිපිරීමෙන් පසු දේවස්ථානයේ ඇතුළත දර්ශනයක්.",
-      },
+  backgroundImage: {
+    url: "/images/attacks/st-sebastians-negombo-interior-3.jpeg",
+    alt: {
+      en: "Shrapnel and blast damage inside the church",
+      si: "දේවස්ථානය ඇතුළත පතුරු සහ පිපිරීමේ හානිය",
     },
-    {
-      url: "/images/attacks/st-sebastians-negombo-interior-2.jpeg",
-      alt: {
-        en: "Security personnel inspecting the damaged church interior",
-        si: "හානි වූ දේවස්ථානයේ ඇතුළත පරීක්ෂා කරන ආරක්ෂක නිලධාරීන්",
-      },
-      caption: {
-        en: "Security personnel at the site shortly after the attack.",
-        si: "ප්‍රහාරයෙන් පසු ස්ථානයේ සිටි ආරක්ෂක නිලධාරීන්.",
-      },
+    caption: {
+      en: "The church interior in the aftermath of the blast.",
+      si: "පිපිරීමෙන් පසු දේවස්ථානයේ ඇතුළත දර්ශනයක්.",
     },
-    {
-      url: "/images/attacks/st-sebastians-negombo-interior-3.jpeg",
-      alt: {
-        en: "Shrapnel and blast damage inside the church",
-        si: "දේවස්ථානය ඇතුළත පතුරු සහ පිපිරීමේ හානිය",
-      },
-      caption: {
-        en: "Shrapnel damage to the church's interior fittings.",
-        si: "දේවස්ථානයේ ඇතුළත උපකරණවලට සිදු වූ පතුරු හානිය.",
-      },
+  },
+  accentImage: {
+    url: "/images/attacks/st-sebastians-negombo-interior-2.jpeg",
+    alt: {
+      en: "Security personnel inspecting the damaged church interior",
+      si: "හානි වූ දේවස්ථානයේ ඇතුළත පරීක්ෂා කරන ආරක්ෂක නිලධාරීන්",
     },
+  },
+  sensitiveNote: {
+    en: "The two photographs below show the church's Risen Christ statue, marked by shrapnel and blood from the blast.",
+    si: "පහත ඡායාරූප දෙක, පිපිරීමේ පතුරු හා රුධිරයෙන් සලකුණු වූ දේවස්ථානයේ නැවත නැඟී සිටින ක්‍රිස්තුස් ප්‍රතිමාව පෙන්වයි.",
+  },
+  sensitiveImages: [
     {
       url: "/images/attacks/st-sebastians-negombo-statue-1.webp",
       alt: {
