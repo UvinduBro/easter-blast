@@ -15,17 +15,8 @@ import {
   UsersIcon,
   type IconProps,
 } from "@/components/site/icons";
-import {
-  AT_A_GLANCE,
-  FEATURED_VICTIMS,
-  HERO,
-  LATEST_UPDATES_HEADING,
-  LATEST_UPDATES_LINK,
-  THREE_THINGS,
-  WHAT_HAPPENED,
-  WHAT_HAPPENED_LINK,
-} from "@/lib/site-content/home";
-import { UPDATES } from "@/lib/site-content/updates";
+import type { HomeContentData } from "@/lib/site-content/home";
+import type { UpdateEntry } from "@/lib/site-content/updates";
 import { useLanguageStore } from "@/store/language-store";
 
 const TEXT = {
@@ -41,35 +32,53 @@ const AT_A_GLANCE_ICONS: Array<(props: IconProps) => ReactElement> = [
   ScalesIcon,
 ];
 
-export default function HomeContent() {
+export default function HomeContent({
+  content,
+  latestUpdates,
+}: {
+  content: HomeContentData;
+  latestUpdates: UpdateEntry[];
+}) {
   const lang = useLanguageStore((s) => s.lang);
   const copy = TEXT[lang];
-  const latestUpdates = UPDATES.slice(0, 3);
+  const {
+    hero,
+    atAGlance,
+    whatHappened,
+    whatHappenedLink,
+    threeThings,
+    latestUpdatesHeading,
+    latestUpdatesLink,
+    featuredVictims,
+    mindMapSection,
+    faqHeading,
+    faqItems,
+  } = content;
 
   return (
     <div className="space-y-10">
       <section>
-        <h1 className="text-2xl font-bold text-zinc-50 sm:text-3xl">{HERO.kicker[lang]}</h1>
-        <p className="mt-3 text-base leading-relaxed text-zinc-200 sm:text-lg">{HERO.body[lang]}</p>
-        <p className="mt-3 text-sm italic leading-relaxed text-zinc-400">{HERO.note[lang]}</p>
+        <h1 className="text-2xl font-bold text-zinc-50 sm:text-3xl">{hero.kicker[lang]}</h1>
+        <p className="mt-3 text-base leading-relaxed text-zinc-200 sm:text-lg">{hero.body[lang]}</p>
+        <p className="mt-3 text-sm italic leading-relaxed text-zinc-400">{hero.note[lang]}</p>
         <div className="mt-5 flex flex-wrap gap-3">
           <Link
             href="/timeline"
             className="rounded-full bg-red-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-red-500"
           >
-            {HERO.ctaTimeline[lang]}
+            {hero.ctaTimeline[lang]}
           </Link>
           <Link
             href="/victims"
             className="rounded-full border border-zinc-700 px-4 py-2 text-sm font-semibold text-zinc-200 transition-colors hover:border-zinc-500 hover:bg-zinc-800"
           >
-            {HERO.ctaVictims[lang]}
+            {hero.ctaVictims[lang]}
           </Link>
         </div>
       </section>
 
       <section className="grid grid-cols-2 gap-3 sm:grid-cols-5">
-        {AT_A_GLANCE.map((stat, i) => {
+        {atAGlance.map((stat, i) => {
           const Icon = AT_A_GLANCE_ICONS[i];
           return (
             <div
@@ -89,9 +98,9 @@ export default function HomeContent() {
           <MapPinIcon className="h-5 w-5 text-red-400" />
           {copy.whatHeading}
         </h2>
-        <p className="mt-3 text-sm leading-relaxed text-zinc-300 sm:text-base">{WHAT_HAPPENED[lang]}</p>
+        <p className="mt-3 text-sm leading-relaxed text-zinc-300 sm:text-base">{whatHappened[lang]}</p>
         <Link href="/attacks" className="mt-2 inline-block text-sm font-medium text-red-400 hover:text-red-300">
-          {WHAT_HAPPENED_LINK[lang]}
+          {whatHappenedLink[lang]}
         </Link>
       </section>
 
@@ -101,7 +110,7 @@ export default function HomeContent() {
           {copy.threeHeading}
         </h2>
         <ol className="mt-4 space-y-4">
-          {THREE_THINGS.map((item, i) => (
+          {threeThings.map((item, i) => (
             <li
               key={i}
               className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-4 transition-colors hover:border-zinc-700"
@@ -126,10 +135,10 @@ export default function HomeContent() {
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h2 className="flex items-center gap-2 text-lg font-semibold text-zinc-50 sm:text-xl">
             <NewsIcon className="h-5 w-5 text-red-400" />
-            {LATEST_UPDATES_HEADING[lang]}
+            {latestUpdatesHeading[lang]}
           </h2>
           <Link href="/updates" className="text-sm font-medium text-red-400 hover:text-red-300">
-            {LATEST_UPDATES_LINK[lang]}
+            {latestUpdatesLink[lang]}
           </Link>
         </div>
         <div className="mt-4 space-y-4">
@@ -142,17 +151,17 @@ export default function HomeContent() {
       <section className="border-t border-zinc-900 pt-8">
         <h2 className="flex items-center gap-2 text-lg font-semibold text-zinc-50 sm:text-xl">
           <HeartIcon className="h-5 w-5 text-red-400" />
-          {FEATURED_VICTIMS.heading[lang]}
+          {featuredVictims.heading[lang]}
         </h2>
-        <p className="mt-3 text-sm leading-relaxed text-zinc-300 sm:text-base">{FEATURED_VICTIMS.body[lang]}</p>
+        <p className="mt-3 text-sm leading-relaxed text-zinc-300 sm:text-base">{featuredVictims.body[lang]}</p>
         <Link href="/victims" className="mt-2 inline-block text-sm font-medium text-red-400 hover:text-red-300">
-          {FEATURED_VICTIMS.link[lang]}
+          {featuredVictims.link[lang]}
         </Link>
       </section>
 
-      <HomeMindMap />
+      <HomeMindMap section={mindMapSection} />
 
-      <FaqSection />
+      <FaqSection heading={faqHeading} items={faqItems} />
     </div>
   );
 }

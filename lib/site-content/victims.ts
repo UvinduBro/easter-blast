@@ -45,3 +45,16 @@ export const LIVING_WITH_AFTERMATH: LocalizedText = {
   en: "Survivors and bereaved families — many in Negombo and Batticaloa — have led the public demand for accountability, often alongside the Catholic Church. Their patience has been tested by years of delay.",
   si: "පැවති අයවලුන් සහ වියෝවට පත් පවුල් — බොහෝ විට නිගොම්බෝ සහ බටිකලෝව ප්‍රදේශවල — බොහෝ විට කතෝලික පල්ලිය සමඟ එක්ව, වගකීම සඳහා මහජන ඉල්ලීම මෙහෙයවා ඇත. වසර ගණනාවක ප්‍රමාදය ඔවුන්ගේ ඉවසීම පරීක්ෂාවට ලක් කර ඇත.",
 };
+
+export const VICTIMS_PAGE_TITLE: LocalizedText = { en: "Victims", si: "විපතට පත් වූවෝ" };
+
+export const VICTIMS_CONTENT = {
+  seo: VICTIMS_SEO,
+  pageTitle: VICTIMS_PAGE_TITLE,
+  opening: VICTIMS_OPENING,
+  whoTheyWere: WHO_THEY_WERE,
+  vaticanRecognition: VATICAN_RECOGNITION,
+  noteOnNumbers: NOTE_ON_NUMBERS,
+  livingWithAftermath: LIVING_WITH_AFTERMATH,
+};
+export type VictimsContentData = typeof VICTIMS_CONTENT;

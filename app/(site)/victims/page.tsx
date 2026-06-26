@@ -4,16 +4,23 @@ import PageHeader from "@/components/site/PageHeader";
 import VictimsContent from "@/components/site/VictimsContent";
 import StructuredData from "@/components/site/StructuredData";
 import { HeartIcon } from "@/components/site/icons";
-import { VICTIMS_SEO } from "@/lib/site-content/victims";
+import { getPageContent } from "@/lib/site/page-content";
 import { buildBreadcrumbList, buildMetadata } from "@/lib/site/seo";
 
-export const metadata: Metadata = buildMetadata({
-  path: "/victims",
-  title: VICTIMS_SEO.title.en,
-  description: VICTIMS_SEO.description.en,
-});
+export const revalidate = 60;
 
-export default function VictimsPage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const content = await getPageContent("victims");
+  return buildMetadata({
+    path: "/victims",
+    title: content.seo.title.en,
+    description: content.seo.description.en,
+  });
+}
+
+export default async function VictimsPage() {
+  const content = await getPageContent("victims");
+
   return (
     <>
       <StructuredData
@@ -22,9 +29,9 @@ export default function VictimsPage() {
           { name: "Victims", path: "/victims" },
         ])}
       />
-      <PageHeader title={{ en: "Victims", si: "විපතට පත් වූවෝ" }} icon={<HeartIcon className="h-5 w-5" />} />
+      <PageHeader title={content.pageTitle} icon={<HeartIcon className="h-5 w-5" />} />
       <PageBody>
-        <VictimsContent />
+        <VictimsContent content={content} />
       </PageBody>
     </>
   );

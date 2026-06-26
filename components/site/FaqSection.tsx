@@ -2,20 +2,27 @@
 
 import { HelpCircleIcon } from "@/components/site/icons";
 import StatusTag from "@/components/site/StatusTag";
-import { FAQ_HEADING, FAQ_ITEMS } from "@/lib/site-content/faq";
+import type { FaqItem } from "@/lib/site-content/faq";
+import type { LocalizedText } from "@/lib/types";
 import { useLanguageStore } from "@/store/language-store";
 
-export default function FaqSection() {
+export default function FaqSection({
+  heading,
+  items,
+}: {
+  heading: LocalizedText;
+  items: FaqItem[];
+}) {
   const lang = useLanguageStore((s) => s.lang);
 
   return (
     <section className="border-t border-zinc-900 pt-8">
       <h2 className="flex items-center gap-2 text-lg font-semibold text-zinc-50 sm:text-xl">
         <HelpCircleIcon className="h-5 w-5 text-red-400" />
-        {FAQ_HEADING[lang]}
+        {heading[lang]}
       </h2>
       <div className="mt-4 space-y-2">
-        {FAQ_ITEMS.map((item, i) => (
+        {items.map((item, i) => (
           <details
             key={i}
             className="group rounded-lg border border-zinc-800 bg-zinc-900/40 p-4 transition-colors hover:border-zinc-700 [&_summary]:list-none"

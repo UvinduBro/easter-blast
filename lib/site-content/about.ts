@@ -75,6 +75,8 @@ export const SOURCE_CATEGORIES: { title: LocalizedText; body: LocalizedText }[] 
   },
 ];
 
+export const ABOUT_PAGE_TITLE: LocalizedText = { en: "About & Sources", si: "අප සහ මූලාශ්‍ර" };
+
 export const OPEN_QUESTIONS: LocalizedText[] = [
   {
     en: "Will the main Trial-at-Bar reach a verdict — and against whom?",
@@ -93,3 +95,14 @@ export const OPEN_QUESTIONS: LocalizedText[] = [
     si: "\"සහරා ජස්මින්\" ජීවතුන් අතර සිටීද?",
   },
 ];
+
+export const ABOUT_CONTENT = {
+  seo: ABOUT_SEO,
+  pageTitle: ABOUT_PAGE_TITLE,
+  whyExists: WHY_EXISTS,
+  editorialStandards: EDITORIAL_STANDARDS,
+  reliabilityNote: RELIABILITY_NOTE,
+  sourceCategories: SOURCE_CATEGORIES,
+  openQuestions: OPEN_QUESTIONS,
+};
+export type AboutContentData = typeof ABOUT_CONTENT;

@@ -4,12 +4,12 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { SearchIcon } from "@/components/site/icons";
 import { useGraphData } from "@/lib/hooks/useGraphData";
-import { MIND_MAP_SECTION } from "@/lib/site-content/home";
+import type { HomeContentData } from "@/lib/site-content/home";
 import { useLanguageStore } from "@/store/language-store";
 
 const FlowMap = dynamic(() => import("@/components/FlowMap"), { ssr: false });
 
-export default function HomeMindMap() {
+export default function HomeMindMap({ section }: { section: HomeContentData["mindMapSection"] }) {
   const lang = useLanguageStore((s) => s.lang);
   const { nodes, edges, loading, error } = useGraphData();
 
@@ -18,14 +18,14 @@ export default function HomeMindMap() {
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="flex items-center gap-2 text-lg font-semibold text-zinc-50 sm:text-xl">
           <SearchIcon className="h-5 w-5 text-red-400" />
-          {MIND_MAP_SECTION.heading[lang]}
+          {section.heading[lang]}
         </h2>
         <Link href="/mind-map" className="text-sm font-medium text-red-400 hover:text-red-300">
-          {MIND_MAP_SECTION.link[lang]}
+          {section.link[lang]}
         </Link>
       </div>
       <p className="mt-3 text-sm leading-relaxed text-zinc-300 sm:text-base">
-        {MIND_MAP_SECTION.body[lang]}
+        {section.body[lang]}
       </p>
       <div className="mt-4 h-[420px] overflow-hidden rounded-lg border border-zinc-800 bg-zinc-950">
         {loading ? (

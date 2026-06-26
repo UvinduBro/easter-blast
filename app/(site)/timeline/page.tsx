@@ -4,16 +4,23 @@ import PageHeader from "@/components/site/PageHeader";
 import TimelinePhase from "@/components/site/TimelinePhase";
 import StructuredData from "@/components/site/StructuredData";
 import { ClockIcon } from "@/components/site/icons";
-import { TIMELINE_INTRO, TIMELINE_PHASES, TIMELINE_SEO } from "@/lib/site-content/timeline";
+import { getPageContent } from "@/lib/site/page-content";
 import { buildBreadcrumbList, buildMetadata } from "@/lib/site/seo";
 
-export const metadata: Metadata = buildMetadata({
-  path: "/timeline",
-  title: TIMELINE_SEO.title.en,
-  description: TIMELINE_SEO.description.en,
-});
+export const revalidate = 60;
 
-export default function TimelinePage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const content = await getPageContent("timeline");
+  return buildMetadata({
+    path: "/timeline",
+    title: content.seo.title.en,
+    description: content.seo.description.en,
+  });
+}
+
+export default async function TimelinePage() {
+  const content = await getPageContent("timeline");
+
   return (
     <>
       <StructuredData
@@ -23,13 +30,13 @@ export default function TimelinePage() {
         ])}
       />
       <PageHeader
-        title={{ en: "Timeline", si: "කාල රාමුව" }}
-        intro={TIMELINE_INTRO}
+        title={content.pageTitle}
+        intro={content.intro}
         icon={<ClockIcon className="h-5 w-5" />}
       />
       <PageBody>
         <div>
-          {TIMELINE_PHASES.map((phase, i) => (
+          {content.phases.map((phase, i) => (
             <TimelinePhase key={i} phase={phase} />
           ))}
         </div>

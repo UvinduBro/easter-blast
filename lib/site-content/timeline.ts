@@ -28,6 +28,8 @@ export interface TimelinePhase {
   entries: TimelineEntry[];
 }
 
+export const TIMELINE_PAGE_TITLE: LocalizedText = { en: "Timeline", si: "කාල රාමුව" };
+
 export const TIMELINE_PHASES: TimelinePhase[] = [
   {
     heading: { en: "Phase 1 — The Warnings (April 2019)", si: "අදියර 1 — අනතුරු ඇඟවීම් (2019 අප්‍රේල්)" },
@@ -373,3 +375,11 @@ export const TIMELINE_PHASES: TimelinePhase[] = [
     ],
   },
 ];
+
+export const TIMELINE_CONTENT = {
+  seo: TIMELINE_SEO,
+  pageTitle: TIMELINE_PAGE_TITLE,
+  intro: TIMELINE_INTRO,
+  phases: TIMELINE_PHASES,
+};
+export type TimelineContentData = typeof TIMELINE_CONTENT;

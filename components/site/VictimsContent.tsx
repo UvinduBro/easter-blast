@@ -1,13 +1,7 @@
 "use client";
 
 import StatusTag from "@/components/site/StatusTag";
-import {
-  LIVING_WITH_AFTERMATH,
-  NOTE_ON_NUMBERS,
-  VATICAN_RECOGNITION,
-  VICTIMS_OPENING,
-  WHO_THEY_WERE,
-} from "@/lib/site-content/victims";
+import type { VictimsContentData } from "@/lib/site-content/victims";
 import { useLanguageStore } from "@/store/language-store";
 
 const TEXT = {
@@ -25,20 +19,20 @@ const TEXT = {
   },
 };
 
-export default function VictimsContent() {
+export default function VictimsContent({ content }: { content: VictimsContentData }) {
   const lang = useLanguageStore((s) => s.lang);
   const copy = TEXT[lang];
 
   return (
     <div className="space-y-8">
       <p className="text-base leading-relaxed text-zinc-200 sm:text-lg">
-        {VICTIMS_OPENING[lang]}
+        {content.opening[lang]}
       </p>
 
       <section>
         <h2 className="text-lg font-semibold text-zinc-50 sm:text-xl">{copy.whoHeading}</h2>
         <div className="mt-3 space-y-3 text-sm leading-relaxed text-zinc-300 sm:text-base">
-          {WHO_THEY_WERE.map((item, i) => (
+          {content.whoTheyWere.map((item, i) => (
             <p key={i}>{item[lang]}</p>
           ))}
         </div>
@@ -47,7 +41,7 @@ export default function VictimsContent() {
       <section className="border-t border-zinc-900 pt-8">
         <h2 className="text-lg font-semibold text-zinc-50 sm:text-xl">{copy.vaticanHeading}</h2>
         <p className="mt-3 text-sm leading-relaxed text-zinc-300 sm:text-base">
-          {VATICAN_RECOGNITION[lang]}
+          {content.vaticanRecognition[lang]}
         </p>
       </section>
 
@@ -58,14 +52,14 @@ export default function VictimsContent() {
           <StatusTag status="fact" />
         </div>
         <p className="mt-3 text-sm leading-relaxed text-zinc-300 sm:text-base">
-          {NOTE_ON_NUMBERS[lang]}
+          {content.noteOnNumbers[lang]}
         </p>
       </section>
 
       <section className="border-t border-zinc-900 pt-8">
         <h2 className="text-lg font-semibold text-zinc-50 sm:text-xl">{copy.aftermathHeading}</h2>
         <p className="mt-3 text-sm leading-relaxed text-zinc-300 sm:text-base">
-          {LIVING_WITH_AFTERMATH[lang]}
+          {content.livingWithAftermath[lang]}
         </p>
       </section>
     </div>

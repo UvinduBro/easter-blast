@@ -1,13 +1,7 @@
 "use client";
 
 import { SITE_CONFIG } from "@/lib/site/config";
-import {
-  EDITORIAL_STANDARDS,
-  OPEN_QUESTIONS,
-  RELIABILITY_NOTE,
-  SOURCE_CATEGORIES,
-  WHY_EXISTS,
-} from "@/lib/site-content/about";
+import type { AboutContentData } from "@/lib/site-content/about";
 import { useLanguageStore } from "@/store/language-store";
 
 const TEXT = {
@@ -33,7 +27,7 @@ const TEXT = {
   },
 };
 
-export default function AboutContent() {
+export default function AboutContent({ content }: { content: AboutContentData }) {
   const lang = useLanguageStore((s) => s.lang);
   const copy = TEXT[lang];
 
@@ -42,7 +36,7 @@ export default function AboutContent() {
       <section>
         <h2 className="text-lg font-semibold text-zinc-50 sm:text-xl">{copy.whyHeading}</h2>
         <p className="mt-2 text-sm leading-relaxed text-zinc-300 sm:text-base">
-          {WHY_EXISTS[lang]}
+          {content.whyExists[lang]}
         </p>
       </section>
 
@@ -51,7 +45,7 @@ export default function AboutContent() {
           {copy.standardsHeading}
         </h2>
         <ol className="mt-3 list-decimal space-y-3 pl-5 text-sm leading-relaxed text-zinc-300 sm:text-base">
-          {EDITORIAL_STANDARDS.map((item, i) => (
+          {content.editorialStandards.map((item, i) => (
             <li key={i}>{item[lang]}</li>
           ))}
         </ol>
@@ -62,7 +56,7 @@ export default function AboutContent() {
           {copy.reliabilityHeading}
         </h2>
         <p className="mt-2 text-sm leading-relaxed text-zinc-300 sm:text-base">
-          {RELIABILITY_NOTE[lang]}
+          {content.reliabilityNote[lang]}
         </p>
       </section>
 
@@ -71,7 +65,7 @@ export default function AboutContent() {
           {copy.categoriesHeading}
         </h2>
         <ul className="mt-3 space-y-2 text-sm leading-relaxed text-zinc-300 sm:text-base">
-          {SOURCE_CATEGORIES.map((cat, i) => (
+          {content.sourceCategories.map((cat, i) => (
             <li key={i}>
               <span className="font-semibold text-zinc-100">{cat.title[lang]}:</span>{" "}
               {cat.body[lang]}
@@ -85,7 +79,7 @@ export default function AboutContent() {
           {copy.questionsHeading}
         </h2>
         <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed text-zinc-300 sm:text-base">
-          {OPEN_QUESTIONS.map((q, i) => (
+          {content.openQuestions.map((q, i) => (
             <li key={i}>{q[lang]}</li>
           ))}
         </ul>

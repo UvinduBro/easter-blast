@@ -46,6 +46,9 @@ export default function AdminLayout({
           <Link href="/admin/edges" className="text-xs text-zinc-400 hover:text-zinc-200">
             Connections
           </Link>
+          <Link href="/admin/content" className="text-xs text-zinc-400 hover:text-zinc-200">
+            Content
+          </Link>
           <Link
             href="/"
             className="text-xs text-zinc-500 hover:text-zinc-300"

@@ -20,6 +20,11 @@ export const CRITICAL_FRAMING: { title: LocalizedText; body: LocalizedText } = {
   },
 };
 
+export const INVESTIGATION_PAGE_TITLE: LocalizedText = {
+  en: "Investigation & Controversy",
+  si: "විමර්ශන හා මතභේද",
+};
+
 export const INVESTIGATION_SECTIONS: ContentSection[] = [
   {
     heading: { en: "The investigators who were removed", si: "ඉවත් කරන ලද විමර්ශකයෝ" },
@@ -109,3 +114,11 @@ export const INVESTIGATION_SECTIONS: ContentSection[] = [
     ],
   },
 ];
+
+export const INVESTIGATION_CONTENT = {
+  seo: INVESTIGATION_SEO,
+  pageTitle: INVESTIGATION_PAGE_TITLE,
+  criticalFraming: CRITICAL_FRAMING,
+  sections: INVESTIGATION_SECTIONS,
+};
+export type InvestigationContentData = typeof INVESTIGATION_CONTENT;

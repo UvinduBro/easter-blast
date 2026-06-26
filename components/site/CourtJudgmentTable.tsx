@@ -1,22 +1,26 @@
 "use client";
 
 import StatusTag from "@/components/site/StatusTag";
-import { COURT_JUDGMENT } from "@/lib/site-content/accountability";
+import type { AccountabilityContentData } from "@/lib/site-content/accountability";
 import { useLanguageStore } from "@/store/language-store";
 
-export default function CourtJudgmentTable() {
+export default function CourtJudgmentTable({
+  judgment,
+}: {
+  judgment: AccountabilityContentData["courtJudgment"];
+}) {
   const lang = useLanguageStore((s) => s.lang);
 
   return (
     <section className="border-t border-zinc-900 py-8">
       <div className="flex flex-wrap items-center gap-2">
         <h2 className="text-lg font-semibold text-zinc-50 sm:text-xl">
-          {COURT_JUDGMENT.heading[lang]}
+          {judgment.heading[lang]}
         </h2>
         <StatusTag status="fact" />
       </div>
       <p className="mt-2 text-sm leading-relaxed text-zinc-400 sm:text-base">
-        {COURT_JUDGMENT.intro[lang]}
+        {judgment.intro[lang]}
       </p>
 
       <div className="mt-4 overflow-x-auto rounded-lg border border-zinc-800">
@@ -35,7 +39,7 @@ export default function CourtJudgmentTable() {
             </tr>
           </thead>
           <tbody className="divide-y divide-zinc-800">
-            {COURT_JUDGMENT.rows.map((row, i) => (
+            {judgment.rows.map((row, i) => (
               <tr key={i} className="text-zinc-200">
                 <td className="px-3 py-2 font-medium text-zinc-100">{row.official[lang]}</td>
                 <td className="px-3 py-2 text-zinc-300">{row.role[lang]}</td>
@@ -46,7 +50,7 @@ export default function CourtJudgmentTable() {
         </table>
       </div>
 
-      <p className="mt-4 text-sm leading-relaxed text-zinc-300">{COURT_JUDGMENT.closing[lang]}</p>
+      <p className="mt-4 text-sm leading-relaxed text-zinc-300">{judgment.closing[lang]}</p>
     </section>
   );
 }

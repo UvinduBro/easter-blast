@@ -4,20 +4,23 @@ import PageBody from "@/components/site/PageBody";
 import PageHeader from "@/components/site/PageHeader";
 import StructuredData from "@/components/site/StructuredData";
 import { GavelIcon } from "@/components/site/icons";
-import {
-  COURT_CASES,
-  COURT_CASES_INTRO,
-  COURT_CASES_SEO,
-} from "@/lib/site-content/court-cases";
+import { getPageContent } from "@/lib/site/page-content";
 import { buildBreadcrumbList, buildMetadata } from "@/lib/site/seo";
 
-export const metadata: Metadata = buildMetadata({
-  path: "/court-cases",
-  title: COURT_CASES_SEO.title.en,
-  description: COURT_CASES_SEO.description.en,
-});
+export const revalidate = 60;
 
-export default function CourtCasesPage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const content = await getPageContent("court-cases");
+  return buildMetadata({
+    path: "/court-cases",
+    title: content.seo.title.en,
+    description: content.seo.description.en,
+  });
+}
+
+export default async function CourtCasesPage() {
+  const content = await getPageContent("court-cases");
+
   return (
     <>
       <StructuredData
@@ -27,13 +30,13 @@ export default function CourtCasesPage() {
         ])}
       />
       <PageHeader
-        title={{ en: "Court Cases", si: "නඩු විභාග" }}
-        intro={COURT_CASES_INTRO}
+        title={content.pageTitle}
+        intro={content.intro}
         icon={<GavelIcon className="h-5 w-5" />}
       />
       <PageBody>
         <div className="space-y-4">
-          {COURT_CASES.map((c, i) => (
+          {content.cases.map((c, i) => (
             <CourtCaseCard key={i} courtCase={c} />
           ))}
         </div>

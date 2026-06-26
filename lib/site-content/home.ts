@@ -1,5 +1,6 @@
 import type { LocalizedText } from "@/lib/types";
 import type { StatusMark } from "@/lib/site/types";
+import { FAQ_HEADING, FAQ_ITEMS } from "@/lib/site-content/faq";
 
 export const HOME_SEO: { title: LocalizedText; description: LocalizedText } = {
   title: {
@@ -99,3 +100,19 @@ export const MIND_MAP_SECTION = {
   },
   link: { en: "Open the full mind map →", si: "සම්පූර්ණ මානසික සිතියම විවෘත කරන්න →" },
 };
+
+export const HOME_CONTENT = {
+  seo: HOME_SEO,
+  hero: HERO,
+  atAGlance: AT_A_GLANCE,
+  whatHappened: WHAT_HAPPENED,
+  whatHappenedLink: WHAT_HAPPENED_LINK,
+  threeThings: THREE_THINGS,
+  latestUpdatesHeading: LATEST_UPDATES_HEADING,
+  latestUpdatesLink: LATEST_UPDATES_LINK,
+  featuredVictims: FEATURED_VICTIMS,
+  mindMapSection: MIND_MAP_SECTION,
+  faqHeading: FAQ_HEADING,
+  faqItems: FAQ_ITEMS,
+};
+export type HomeContentData = typeof HOME_CONTENT;

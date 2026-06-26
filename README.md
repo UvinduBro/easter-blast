@@ -102,10 +102,14 @@ typically [http://localhost:4000](http://localhost:4000)) → Authentication →
   and a list of sources (label + URL).
 - `/admin/edges`, `/admin/edges/new`, `/admin/edges/[id]` — list/create/edit connections between nodes,
   with optional bilingual labels.
+- `/admin/content`, `/admin/content/[slug]` — edit the bilingual text shown on each of the ten
+  content pages (Home, The Attacks, Victims, Timeline, Updates, About & Sources, Accountability,
+  Perpetrators, Investigation & Controversy, Court Cases) through a generic recursive form. Edits
+  are stored per page in the `pageContent` Firestore collection and merge over the static defaults
+  in `lib/site-content/*.ts`, which still ship as the fallback/seed copy.
 
 New nodes are positioned automatically by the dagre layout on the Mind Map — there's no manual x/y
-entry in the admin form. The ten content pages are not editable from `/admin`; their copy lives in
-`lib/site-content/*.ts` and is edited in code.
+entry in the admin form.
 
 ## Project structure
 
@@ -114,12 +118,14 @@ entry in the admin form. The ten content pages are not editable from `/admin`; t
   sharing `app/(site)/layout.tsx` (`SiteHeader` + `SiteFooter`)
 - `app/mind-map/page.tsx` — the full interactive mind-map app: view switcher, disclaimer, legend,
   active view, detail drawer
-- `app/admin/` — admin login, route guard layout, dashboard, and node/edge CRUD pages
+- `app/admin/` — admin login, route guard layout, dashboard, node/edge CRUD pages, and
+  `app/admin/content/` (page-content index + per-page editor)
 - `components/site/` — site shell and content-page components: `SiteHeader`, `SiteFooter`,
   `PageHeader`, `PageBody`, `ContentSection` (boxed entries reused by most content pages),
-  `StatusTag`, `Callout`, plus bespoke per-page components (`HomeContent`, `HomeMindMap`,
-  `VictimsContent`, `TimelinePhase`, `UpdatesContent`, `UpdateCard`, `CourtCaseCard`,
-  `CourtJudgmentTable`, `AboutContent`)
+  `StatusTag`, `Callout`, `Reveal` (scroll-in animation, respects `prefers-reduced-motion`),
+  `GraphicImage` (click-to-reveal gate for sensitive photos), plus bespoke per-page components
+  (`HomeContent`, `HomeMindMap`, `VictimsContent`, `TimelinePhase`, `UpdatesContent`, `UpdateCard`,
+  `CourtCaseCard`, `CourtJudgmentTable`, `AboutContent`)
 - `components/FlowMap.tsx` — React Flow canvas (dagre-laid-out nodes/edges, minimap, controls)
 - `components/CardNode.tsx` — custom node renderer for the Mind Map
 - `components/views/` — `TimelineView`, `TableView`, `GroupedView`, `TreeView`
@@ -129,11 +135,18 @@ entry in the admin form. The ten content pages are not editable from `/admin`; t
 - `components/Legend.tsx` — category color legend
 - `components/Disclaimer.tsx` — dismissible disclaimer banner
 - `components/admin/NodeForm.tsx`, `components/admin/EdgeForm.tsx` — admin create/edit forms
+- `components/admin/ContentEditor.tsx` — generic recursive form that edits any page's content
+  shape (bilingual text, status enums, arrays, nested objects) without per-page bespoke forms
 - `lib/site-content/` — bilingual copy for each content page (one file per page), kept as data,
-  never hardcoded in JSX
+  never hardcoded in JSX; these are the static defaults/seed values, mergeable with Firestore edits
 - `lib/site/config.ts` — site identity (`easterattack.com` domain, brand name, contact emails)
 - `lib/site/nav.ts` — primary navigation
 - `lib/site/types.ts` — shared content-page types (`ContentSection`, `Entry`, `StatusMark`)
+- `lib/site/page-content-registry.ts` — client-safe page slug registry and static content defaults
+- `lib/site/page-content.ts` — server-only, Admin-SDK-backed `getPageContent` (Firestore overrides
+  merged onto the registry defaults, `cache()`-wrapped per request)
+- `lib/hooks/usePageContent.ts` — client-side one-time fetch of a page's Firestore content for the
+  admin editor (deliberately not realtime, so it can't clobber unsaved in-progress edits)
 - `lib/status-styles.ts` — icon/color/label per status tag (fact/allegation/developing/disputed)
 - `lib/firebase-client.ts` — Firebase Web SDK init (Auth/Firestore/Storage, with emulator wiring)
 - `lib/firebase-admin.ts` — Firebase Admin SDK init, used only by `scripts/seed.ts`

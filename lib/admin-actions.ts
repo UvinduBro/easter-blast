@@ -9,6 +9,7 @@ import {
 } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { db, storage } from "@/lib/firebase-client";
+import type { PageContentFor, PageSlug } from "@/lib/site/page-content-registry";
 import type { GraphEdge, GraphNode } from "@/lib/types";
 
 export type NodeFormData = Omit<GraphNode, "id">;
@@ -69,4 +70,11 @@ export async function saveEdge(
 
 export async function deleteEdge(id: string): Promise<void> {
   await deleteDoc(doc(db, "edges", id));
+}
+
+export async function savePageContent<K extends PageSlug>(
+  slug: K,
+  data: PageContentFor<K>
+): Promise<void> {
+  await setDoc(doc(db, "pageContent", slug), data);
 }

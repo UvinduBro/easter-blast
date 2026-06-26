@@ -4,16 +4,23 @@ import PageBody from "@/components/site/PageBody";
 import PageHeader from "@/components/site/PageHeader";
 import StructuredData from "@/components/site/StructuredData";
 import { MapPinIcon } from "@/components/site/icons";
-import { ATTACKS_INTRO, ATTACKS_SECTIONS, ATTACKS_SEO } from "@/lib/site-content/attacks";
+import { getPageContent } from "@/lib/site/page-content";
 import { buildBreadcrumbList, buildMetadata } from "@/lib/site/seo";
 
-export const metadata: Metadata = buildMetadata({
-  path: "/attacks",
-  title: ATTACKS_SEO.title.en,
-  description: ATTACKS_SEO.description.en,
-});
+export const revalidate = 60;
 
-export default function AttacksPage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const content = await getPageContent("attacks");
+  return buildMetadata({
+    path: "/attacks",
+    title: content.seo.title.en,
+    description: content.seo.description.en,
+  });
+}
+
+export default async function AttacksPage() {
+  const content = await getPageContent("attacks");
+
   return (
     <>
       <StructuredData
@@ -23,12 +30,12 @@ export default function AttacksPage() {
         ])}
       />
       <PageHeader
-        title={{ en: "The Attacks", si: "ප්‍රහාරය" }}
-        intro={ATTACKS_INTRO}
+        title={content.pageTitle}
+        intro={content.intro}
         icon={<MapPinIcon className="h-5 w-5" />}
       />
       <PageBody>
-        {ATTACKS_SECTIONS.map((section, i) => (
+        {content.sections.map((section, i) => (
           <ContentSection key={i} section={section} />
         ))}
       </PageBody>

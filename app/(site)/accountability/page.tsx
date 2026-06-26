@@ -5,22 +5,23 @@ import PageBody from "@/components/site/PageBody";
 import PageHeader from "@/components/site/PageHeader";
 import StructuredData from "@/components/site/StructuredData";
 import { ScalesIcon } from "@/components/site/icons";
-import {
-  ACCOUNTABILITY_INTRO,
-  ACCOUNTABILITY_SEO,
-  DISMISSAL,
-  INTELLIGENCE_FAILURE,
-  OFFICIAL_INQUIRIES,
-} from "@/lib/site-content/accountability";
+import { getPageContent } from "@/lib/site/page-content";
 import { buildBreadcrumbList, buildMetadata } from "@/lib/site/seo";
 
-export const metadata: Metadata = buildMetadata({
-  path: "/accountability",
-  title: ACCOUNTABILITY_SEO.title.en,
-  description: ACCOUNTABILITY_SEO.description.en,
-});
+export const revalidate = 60;
 
-export default function AccountabilityPage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const content = await getPageContent("accountability");
+  return buildMetadata({
+    path: "/accountability",
+    title: content.seo.title.en,
+    description: content.seo.description.en,
+  });
+}
+
+export default async function AccountabilityPage() {
+  const content = await getPageContent("accountability");
+
   return (
     <>
       <StructuredData
@@ -30,15 +31,15 @@ export default function AccountabilityPage() {
         ])}
       />
       <PageHeader
-        title={{ en: "Accountability", si: "වගකීම" }}
-        intro={ACCOUNTABILITY_INTRO}
+        title={content.pageTitle}
+        intro={content.intro}
         icon={<ScalesIcon className="h-5 w-5" />}
       />
       <PageBody>
-        <ContentSection section={INTELLIGENCE_FAILURE} />
-        <CourtJudgmentTable />
-        <ContentSection section={DISMISSAL} />
-        <ContentSection section={OFFICIAL_INQUIRIES} />
+        <ContentSection section={content.intelligenceFailure} />
+        <CourtJudgmentTable judgment={content.courtJudgment} />
+        <ContentSection section={content.dismissal} />
+        <ContentSection section={content.officialInquiries} />
       </PageBody>
     </>
   );

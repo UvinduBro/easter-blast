@@ -28,6 +28,8 @@ export interface UpdateEntry {
   affects: LocalizedText;
 }
 
+export const UPDATES_PAGE_TITLE: LocalizedText = { en: "Updates", si: "යාවත්කාලීන කිරීම්" };
+
 export const UPDATES: UpdateEntry[] = [
   {
     date: { en: "10 June 2026", si: "2026 ජූනි 10" },
@@ -138,3 +140,11 @@ export const UPDATES: UpdateEntry[] = [
     },
   },
 ];
+
+export const UPDATES_CONTENT = {
+  seo: UPDATES_SEO,
+  pageTitle: UPDATES_PAGE_TITLE,
+  howThisWorks: UPDATES_HOW_THIS_WORKS,
+  items: UPDATES,
+};
+export type UpdatesContentData = typeof UPDATES_CONTENT;

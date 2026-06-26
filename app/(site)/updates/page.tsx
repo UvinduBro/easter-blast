@@ -4,16 +4,23 @@ import PageHeader from "@/components/site/PageHeader";
 import UpdatesContent from "@/components/site/UpdatesContent";
 import StructuredData from "@/components/site/StructuredData";
 import { NewsIcon } from "@/components/site/icons";
-import { UPDATES_SEO } from "@/lib/site-content/updates";
+import { getPageContent } from "@/lib/site/page-content";
 import { buildBreadcrumbList, buildMetadata } from "@/lib/site/seo";
 
-export const metadata: Metadata = buildMetadata({
-  path: "/updates",
-  title: UPDATES_SEO.title.en,
-  description: UPDATES_SEO.description.en,
-});
+export const revalidate = 60;
 
-export default function UpdatesPage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const content = await getPageContent("updates");
+  return buildMetadata({
+    path: "/updates",
+    title: content.seo.title.en,
+    description: content.seo.description.en,
+  });
+}
+
+export default async function UpdatesPage() {
+  const content = await getPageContent("updates");
+
   return (
     <>
       <StructuredData
@@ -22,9 +29,9 @@ export default function UpdatesPage() {
           { name: "Updates", path: "/updates" },
         ])}
       />
-      <PageHeader title={{ en: "Updates", si: "යාවත්කාලීන කිරීම්" }} icon={<NewsIcon className="h-5 w-5" />} />
+      <PageHeader title={content.pageTitle} icon={<NewsIcon className="h-5 w-5" />} />
       <PageBody>
-        <UpdatesContent />
+        <UpdatesContent content={content} />
       </PageBody>
     </>
   );

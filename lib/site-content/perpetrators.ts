@@ -17,6 +17,8 @@ export const PERPETRATORS_INTRO: LocalizedText = {
   si: "මෙම ප්‍රහාරය, දේශීයව රැඩිකල්කරණයට ලක් වූ, ISIS ආභාසය ලද කුඩා ජාලයක් විසින් සිදු කරන ලදී.",
 };
 
+export const PERPETRATORS_PAGE_TITLE: LocalizedText = { en: "Perpetrators", si: "ප්‍රහාරකයින්" };
+
 export const PERPETRATORS_SECTIONS: ContentSection[] = [
   {
     heading: { en: "The groups", si: "කණ්ඩායම්" },
@@ -93,3 +95,11 @@ export const PERPETRATORS_SECTIONS: ContentSection[] = [
     ],
   },
 ];
+
+export const PERPETRATORS_CONTENT = {
+  seo: PERPETRATORS_SEO,
+  pageTitle: PERPETRATORS_PAGE_TITLE,
+  intro: PERPETRATORS_INTRO,
+  sections: PERPETRATORS_SECTIONS,
+};
+export type PerpetratorsContentData = typeof PERPETRATORS_CONTENT;

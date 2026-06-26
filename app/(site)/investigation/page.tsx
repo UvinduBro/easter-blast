@@ -5,20 +5,23 @@ import PageBody from "@/components/site/PageBody";
 import PageHeader from "@/components/site/PageHeader";
 import StructuredData from "@/components/site/StructuredData";
 import { SearchIcon } from "@/components/site/icons";
-import {
-  CRITICAL_FRAMING,
-  INVESTIGATION_SECTIONS,
-  INVESTIGATION_SEO,
-} from "@/lib/site-content/investigation";
+import { getPageContent } from "@/lib/site/page-content";
 import { buildBreadcrumbList, buildMetadata } from "@/lib/site/seo";
 
-export const metadata: Metadata = buildMetadata({
-  path: "/investigation",
-  title: INVESTIGATION_SEO.title.en,
-  description: INVESTIGATION_SEO.description.en,
-});
+export const revalidate = 60;
 
-export default function InvestigationPage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const content = await getPageContent("investigation");
+  return buildMetadata({
+    path: "/investigation",
+    title: content.seo.title.en,
+    description: content.seo.description.en,
+  });
+}
+
+export default async function InvestigationPage() {
+  const content = await getPageContent("investigation");
+
   return (
     <>
       <StructuredData
@@ -27,15 +30,16 @@ export default function InvestigationPage() {
           { name: "Investigation & Controversy", path: "/investigation" },
         ])}
       />
-      <PageHeader
-        title={{ en: "Investigation & Controversy", si: "විමර්ශන හා මතභේද" }}
-        icon={<SearchIcon className="h-5 w-5" />}
-      />
+      <PageHeader title={content.pageTitle} icon={<SearchIcon className="h-5 w-5" />} />
       <PageBody>
         <div className="mb-6">
-          <Callout tone="warning" title={CRITICAL_FRAMING.title} body={CRITICAL_FRAMING.body} />
+          <Callout
+            tone="warning"
+            title={content.criticalFraming.title}
+            body={content.criticalFraming.body}
+          />
         </div>
-        {INVESTIGATION_SECTIONS.map((section, i) => (
+        {content.sections.map((section, i) => (
           <ContentSection key={i} section={section} />
         ))}
       </PageBody>

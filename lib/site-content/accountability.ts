@@ -99,6 +99,8 @@ export const DISMISSAL: ContentSection = {
   ],
 };
 
+export const ACCOUNTABILITY_PAGE_TITLE: LocalizedText = { en: "Accountability", si: "වගකීම" };
+
 export const OFFICIAL_INQUIRIES: ContentSection = {
   heading: { en: "The official inquiries", si: "නිල විමර්ශන" },
   entries: [
@@ -131,3 +133,14 @@ export const OFFICIAL_INQUIRIES: ContentSection = {
     },
   ],
 };
+
+export const ACCOUNTABILITY_CONTENT = {
+  seo: ACCOUNTABILITY_SEO,
+  pageTitle: ACCOUNTABILITY_PAGE_TITLE,
+  intro: ACCOUNTABILITY_INTRO,
+  intelligenceFailure: INTELLIGENCE_FAILURE,
+  courtJudgment: COURT_JUDGMENT,
+  dismissal: DISMISSAL,
+  officialInquiries: OFFICIAL_INQUIRIES,
+};
+export type AccountabilityContentData = typeof ACCOUNTABILITY_CONTENT;

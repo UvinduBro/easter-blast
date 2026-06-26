@@ -24,6 +24,8 @@ export interface CourtCase {
   body: LocalizedText;
 }
 
+export const COURT_CASES_PAGE_TITLE: LocalizedText = { en: "Court Cases", si: "නඩු විභාග" };
+
 export const COURT_CASES: CourtCase[] = [
   {
     title: { en: "1. The main criminal Trial-at-Bar", si: "1. ප්‍රධාන අපරාධ නඩු විභාගය" },
@@ -73,3 +75,11 @@ export const COURT_CASES: CourtCase[] = [
     },
   },
 ];
+
+export const COURT_CASES_CONTENT = {
+  seo: COURT_CASES_SEO,
+  pageTitle: COURT_CASES_PAGE_TITLE,
+  intro: COURT_CASES_INTRO,
+  cases: COURT_CASES,
+};
+export type CourtCasesContentData = typeof COURT_CASES_CONTENT;
