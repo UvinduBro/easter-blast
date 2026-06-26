@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import { SearchIcon } from "@/components/site/icons";
 import { useGraphData } from "@/lib/hooks/useGraphData";
 import { MIND_MAP_SECTION } from "@/lib/site-content/home";
 import { useLanguageStore } from "@/store/language-store";
@@ -15,7 +16,8 @@ export default function HomeMindMap() {
   return (
     <section className="border-t border-zinc-900 pt-8">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <h2 className="text-lg font-semibold text-zinc-50 sm:text-xl">
+        <h2 className="flex items-center gap-2 text-lg font-semibold text-zinc-50 sm:text-xl">
+          <SearchIcon className="h-5 w-5 text-red-400" />
           {MIND_MAP_SECTION.heading[lang]}
         </h2>
         <Link href="/mind-map" className="text-sm font-medium text-red-400 hover:text-red-300">

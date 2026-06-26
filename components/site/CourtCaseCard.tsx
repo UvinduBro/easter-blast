@@ -8,7 +8,7 @@ export default function CourtCaseCard({ courtCase }: { courtCase: CourtCase }) {
   const lang = useLanguageStore((s) => s.lang);
 
   return (
-    <div className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-4">
+    <div className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-4 transition-colors hover:border-zinc-700">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h3 className="font-semibold text-zinc-100">{courtCase.title[lang]}</h3>
         <div className="flex flex-wrap gap-1.5">

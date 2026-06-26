@@ -1,9 +1,20 @@
 "use client";
 
 import Link from "next/link";
+import type { ReactElement } from "react";
+import FaqSection from "@/components/site/FaqSection";
 import HomeMindMap from "@/components/site/HomeMindMap";
 import StatusTag from "@/components/site/StatusTag";
 import UpdateCard from "@/components/site/UpdateCard";
+import {
+  CandleIcon,
+  HeartIcon,
+  MapPinIcon,
+  NewsIcon,
+  ScalesIcon,
+  UsersIcon,
+  type IconProps,
+} from "@/components/site/icons";
 import {
   AT_A_GLANCE,
   FEATURED_VICTIMS,
@@ -22,6 +33,14 @@ const TEXT = {
   en: { whatHeading: "What happened", threeHeading: "Three things to understand" },
 };
 
+const AT_A_GLANCE_ICONS: Array<(props: IconProps) => ReactElement> = [
+  CandleIcon,
+  HeartIcon,
+  MapPinIcon,
+  UsersIcon,
+  ScalesIcon,
+];
+
 export default function HomeContent() {
   const lang = useLanguageStore((s) => s.lang);
   const copy = TEXT[lang];
@@ -36,13 +55,13 @@ export default function HomeContent() {
         <div className="mt-5 flex flex-wrap gap-3">
           <Link
             href="/timeline"
-            className="rounded-full bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-500"
+            className="rounded-full bg-red-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-red-500"
           >
             {HERO.ctaTimeline[lang]}
           </Link>
           <Link
             href="/victims"
-            className="rounded-full border border-zinc-700 px-4 py-2 text-sm font-semibold text-zinc-200 hover:border-zinc-500 hover:bg-zinc-800"
+            className="rounded-full border border-zinc-700 px-4 py-2 text-sm font-semibold text-zinc-200 transition-colors hover:border-zinc-500 hover:bg-zinc-800"
           >
             {HERO.ctaVictims[lang]}
           </Link>
@@ -50,16 +69,26 @@ export default function HomeContent() {
       </section>
 
       <section className="grid grid-cols-2 gap-3 sm:grid-cols-5">
-        {AT_A_GLANCE.map((stat, i) => (
-          <div key={i} className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-4 text-center">
-            <div className="text-xl font-bold text-zinc-50 sm:text-2xl">{stat.value}</div>
-            <div className="mt-1 text-xs text-zinc-400">{stat.label[lang]}</div>
-          </div>
-        ))}
+        {AT_A_GLANCE.map((stat, i) => {
+          const Icon = AT_A_GLANCE_ICONS[i];
+          return (
+            <div
+              key={i}
+              className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-4 text-center transition-colors hover:border-zinc-700 hover:bg-zinc-900"
+            >
+              {Icon && <Icon className="mx-auto h-5 w-5 text-red-400" />}
+              <div className="mt-2 text-xl font-bold text-zinc-50 sm:text-2xl">{stat.value}</div>
+              <div className="mt-1 text-xs text-zinc-400">{stat.label[lang]}</div>
+            </div>
+          );
+        })}
       </section>
 
       <section className="border-t border-zinc-900 pt-8">
-        <h2 className="text-lg font-semibold text-zinc-50 sm:text-xl">{copy.whatHeading}</h2>
+        <h2 className="flex items-center gap-2 text-lg font-semibold text-zinc-50 sm:text-xl">
+          <MapPinIcon className="h-5 w-5 text-red-400" />
+          {copy.whatHeading}
+        </h2>
         <p className="mt-3 text-sm leading-relaxed text-zinc-300 sm:text-base">{WHAT_HAPPENED[lang]}</p>
         <Link href="/attacks" className="mt-2 inline-block text-sm font-medium text-red-400 hover:text-red-300">
           {WHAT_HAPPENED_LINK[lang]}
@@ -67,10 +96,16 @@ export default function HomeContent() {
       </section>
 
       <section className="border-t border-zinc-900 pt-8">
-        <h2 className="text-lg font-semibold text-zinc-50 sm:text-xl">{copy.threeHeading}</h2>
+        <h2 className="flex items-center gap-2 text-lg font-semibold text-zinc-50 sm:text-xl">
+          <ScalesIcon className="h-5 w-5 text-red-400" />
+          {copy.threeHeading}
+        </h2>
         <ol className="mt-4 space-y-4">
           {THREE_THINGS.map((item, i) => (
-            <li key={i} className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-4">
+            <li
+              key={i}
+              className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-4 transition-colors hover:border-zinc-700"
+            >
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <h3 className="font-semibold text-zinc-100">
                   {i + 1}. {item.heading[lang]}
@@ -89,7 +124,8 @@ export default function HomeContent() {
 
       <section className="border-t border-zinc-900 pt-8">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <h2 className="text-lg font-semibold text-zinc-50 sm:text-xl">
+          <h2 className="flex items-center gap-2 text-lg font-semibold text-zinc-50 sm:text-xl">
+            <NewsIcon className="h-5 w-5 text-red-400" />
             {LATEST_UPDATES_HEADING[lang]}
           </h2>
           <Link href="/updates" className="text-sm font-medium text-red-400 hover:text-red-300">
@@ -104,7 +140,10 @@ export default function HomeContent() {
       </section>
 
       <section className="border-t border-zinc-900 pt-8">
-        <h2 className="text-lg font-semibold text-zinc-50 sm:text-xl">{FEATURED_VICTIMS.heading[lang]}</h2>
+        <h2 className="flex items-center gap-2 text-lg font-semibold text-zinc-50 sm:text-xl">
+          <HeartIcon className="h-5 w-5 text-red-400" />
+          {FEATURED_VICTIMS.heading[lang]}
+        </h2>
         <p className="mt-3 text-sm leading-relaxed text-zinc-300 sm:text-base">{FEATURED_VICTIMS.body[lang]}</p>
         <Link href="/victims" className="mt-2 inline-block text-sm font-medium text-red-400 hover:text-red-300">
           {FEATURED_VICTIMS.link[lang]}
@@ -112,6 +151,8 @@ export default function HomeContent() {
       </section>
 
       <HomeMindMap />
+
+      <FaqSection />
     </div>
   );
 }

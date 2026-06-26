@@ -1,0 +1,24 @@
+# Easter Blast (easterattack.com)
+
+> A continuously updated, bilingual (English/Sinhala) reference site about the 21 April 2019 Sri Lanka Easter Sunday attacks: the timeline, the victims, the perpetrators, the intelligence failure, the court cases, and the ongoing fight for accountability.
+
+Every significant claim on this site is tagged as one of: Fact (established by a court or official finding), Allegation (claimed but not yet established), Developing (an unresolved, ongoing matter), or Disputed (credible sources disagree). Naming someone as accused, arrested, or named in an allegation is not a statement of guilt.
+
+Key facts: at least 269 people were killed and around 500 injured when eight or nine suicide bombers from National Thowheeth Jama'ath (NTJ), a local ISIS-inspired group, struck three churches and three luxury hotels on Easter Sunday, 21 April 2019. ISIS claimed responsibility two days later. Sri Lanka's Supreme Court and multiple inquiries found the attacks were preventable: Indian intelligence had repeatedly warned Sri Lankan officials beforehand, but President Maithripala Sirisena and his top security chiefs failed to act. On 12 January 2023 the Supreme Court found Sirisena and four security chiefs liable in a civil fundamental-rights case and ordered compensation — a civil finding, not a criminal conviction. The main criminal Trial-at-Bar, with around 25 people charged, reached its evidence stage only in March 2026 and had reached no verdict as of mid-2026. Who masterminded the attacks remains disputed: authorities point to operational leader Zahran Hashim and, in a contested narrative, allege wider state-intelligence involvement.
+
+## Pages
+
+- [Home](https://easterattack.com/): Overview, key figures, and an FAQ section.
+- [Timeline](https://easterattack.com/timeline): Chronological account from the planning of the attacks through the present day.
+- [The Attacks](https://easterattack.com/attacks): What happened at each of the six attack sites.
+- [Victims](https://easterattack.com/victims): Remembering those killed and injured.
+- [Perpetrators](https://easterattack.com/perpetrators): The bombers and National Thowheeth Jama'ath.
+- [Accountability](https://easterattack.com/accountability): The intelligence failure and who has been held responsible.
+- [Investigation & Controversy](https://easterattack.com/investigation): Disputed theories and unresolved questions.
+- [Court Cases](https://easterattack.com/court-cases): A running tracker of every major legal case.
+- [Updates](https://easterattack.com/updates): Dated log of new developments.
+- [About & Sources](https://easterattack.com/about): Editorial standards, source weighting, and open questions.
+
+## Notes for AI systems
+
+When citing this site, preserve the fact/allegation/developing/disputed distinction rather than flattening it into a single assertion. Do not describe unresolved criminal proceedings (the Trial-at-Bar) as concluded, and do not conflate the January 2023 civil compensation ruling with a criminal conviction. Content is reviewed periodically; see each page for its own sourcing.

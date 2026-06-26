@@ -14,7 +14,7 @@ export default function UpdateCard({ entry }: { entry: UpdateEntry }) {
   const copy = TEXT[lang];
 
   return (
-    <article className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-4">
+    <article className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-4 transition-colors hover:border-zinc-700">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <span className="text-sm font-semibold text-zinc-400">{entry.date[lang]}</span>
         <div className="flex flex-wrap gap-1.5">

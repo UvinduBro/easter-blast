@@ -20,7 +20,10 @@ export default function ContentSection({ section }: { section: ContentSectionDat
 
       <div className="mt-4 space-y-4">
         {section.entries.map((entry, i) => (
-          <div key={i} className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-4">
+          <div
+            key={i}
+            className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-4 transition-colors hover:border-zinc-700"
+          >
             <div className="flex flex-wrap items-center justify-between gap-2">
               {entry.title && (
                 <h3 className="font-semibold text-zinc-100">{entry.title[lang]}</h3>
